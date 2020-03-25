@@ -25,7 +25,7 @@ class Home extends Component {
   }
 
   render (_, { searchTerm, shops }) {
-    return <div class="container">
+    return <div class="container px-1">
       <h1 className="text-xl border-b-2 border-accent inline-block mb-4">Herrenberg liefert - Handel und Gastronomie trotz(t) Corona</h1>
       <div className="max-w-3xl">
         <p class="mb-8">
