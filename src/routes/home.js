@@ -32,7 +32,8 @@ class Home extends Component {
         Der besondere Charme von Herrenberg – den zaubern nicht nur eine wunderschöne Altstadt und die Stiftskirche, sondern auch zahlreiche kleine, kleinste und größere Geschäfte, Restaurants und Cafés. Händler und Gastronomen tragen viel dazu bei, dass Herrenberg eine so lebens- und liebenswerte Stadt ist.
         </p>
 
-        <input value={searchTerm} onInput={this.search} className="w-full bg-gray-200 rounded px-2 py-1 text-lg" type="text" placeholder="Suchbegriff eingeben" />
+        <label htmlFor="search" className="text-xs font-bold">Nach Schlagwort suchen</label>
+        <input id="search" value={searchTerm} onInput={this.search} className="w-full bg-gray-200 rounded px-2 py-1 text-lg" type="text" placeholder="Suchbegriff eingeben" />
       </div>
       {!shops.length && (
         <p className="my-8 italic text-red-600">keine Geschäfte für diesen Suchbegriff gefunden.</p>
