@@ -5,17 +5,7 @@ module.exports = (config, env, helpers, params) => {
     content: ['./build/**/*.js', './build/**/*.html'],
     css: ['./build/**/*.css'],
     whitelist: ['body'],
-    extractors: [
-    {
-      extractor: class TailwindExtractor {
-        static extract (content) {
-          const contentWithoutStyleBlocks = content.replace(/<style[^]+?<\/style>/gi, '')
-          return contentWithoutStyleBlocks.match(/[A-Za-z0-9-_:/]+/g) || []
-        }
-      },
-      extensions: ['css', 'html'],
-    },
-  ]
+    defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
   })
 
   const postCssLoaders = helpers.getLoadersByName(config, 'postcss-loader')
