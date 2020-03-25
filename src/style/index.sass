@@ -1,0 +1,63 @@
+@tailwind base
+@tailwind components
+@tailwind utilities
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap')
+$font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+$color-accent: #9fc727
+
+body
+  @apply m-0 leading-normal font-sans text-black
+  font-family: $font-family
+
+h1
+  @apply text-lg font-bold
+
+nav > a
+  @apply inline-block p-1 mx-2 rounded
+
+nav > a:last-child
+  @apply mr-0
+
+text
+  @apply font-sans
+
+pre
+  @apply text-xs
+
+.example-container
+  @apply flex mb-8
+  div
+    @apply flex-1
+    &:first-child
+      @apply pr-2
+    &:last-child
+      @apply pl-2
+    p
+      @apply font-bold
+    small
+      @apply text-xs italic text-gray-700 mb-2
+
+// helpers for accents
+.text-accent
+  color: $color-accent
+.border-accent
+  border-color: $color-accent
+.bg-accent
+  background-color: $color-accent
+
+// shop cards
+.card
+  @apply relative rounded shadow bg-white max-w-lg p-4
+  &:last-child
+    @apply mr-0
+  .image
+    @apply mb-4 h-32 w-auto mx-auto
+    object-fit: contain
+  .header
+    @apply font-bold text-lg
+  .description
+    @apply py-1
+  .phone
+    @apply py-1 flex items-center text-gray-600
+  .link-shop
+    @apply bg-accent font-bold rounded inline-block px-4 py-2 mr-4
