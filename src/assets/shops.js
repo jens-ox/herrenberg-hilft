@@ -12,4 +12,19 @@ module.exports = [{
   url: 'https://www.barista-cafe.com/',
   image: 'assets/img/barista.jpg',
   tags: ['cafe', 'getränke', 'trinken', 'liefern']
+}, {
+  name: 'Fromagerie Holzapfel',
+  description: 'Wir haben von Dienstag bis Freitag von 9 bis 14 Uhr und Samstag von 7.30 bis 13 Uhr für Sie geöffnet. Gerne nehmen wir Ihre Bestellung bereits vorab entgegen.',
+  phone: '07032/930950',
+  mail: 'info@fromagerie-holzapfel.de',
+  url: 'http://www.fromagerie-holzapfel.de/fromagerie-holzapfel/',
+  image: 'assets/img/holzapfel.jpg',
+  tags: ['käse', 'wein']
+}, {
+  name: 'Gerullis',
+  description: 'Für die kommenden Wochen bieten wir Ihnen einen Lieferservice an 7 Tagen in der Woche für Ihr Mittagessen an. Die tägliche Speiseauswahl erfahren Sie telefonisch. Ihre Bestellung nehmen wir gerne bis 10 Uhr entgegen.',
+  phone: '07032/5342',
+  url: 'https://www.partyservice-gerullis.de/kontakt/',
+  image: 'assets/img/gerullis.png',
+  tags: ['party', 'liefern', 'fleisch', 'mittag']
 }]
