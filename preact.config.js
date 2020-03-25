@@ -6,15 +6,16 @@ module.exports = (config, env, helpers, params) => {
     css: ['./build/**/*.css'],
     whitelist: ['body'],
     extractors: [
-      {
-        extractor: class TailwindExtractor {
-          static extract(content) {
-            return content.match(/[A-Za-z0-9-_:\/]+/g) || []
-          }
-        },
-        extensions: ['css', 'html', 'vue'],
+    {
+      extractor: class TailwindExtractor {
+        static extract (content) {
+          const contentWithoutStyleBlocks = content.replace(/<style[^]+?<\/style>/gi, '')
+          return contentWithoutStyleBlocks.match(/[A-Za-z0-9-_:/]+/g) || []
+        }
       },
-    ]
+      extensions: ['css', 'html'],
+    },
+  ]
   })
 
   const postCssLoaders = helpers.getLoadersByName(config, 'postcss-loader')
