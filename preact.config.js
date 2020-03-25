@@ -4,7 +4,17 @@ module.exports = (config, env, helpers, params) => {
     // Specify the paths to all of the template files in your project
     content: ['./build/**/*.js', './build/**/*.html'],
     css: ['./build/**/*.css'],
-    whitelist: ['body']
+    whitelist: ['body'],
+    extractors: [
+      {
+        extractor: class TailwindExtractor {
+          static extract(content) {
+            return content.match(/[A-Za-z0-9-_:\/]+/g) || []
+          }
+        },
+        extensions: ['css', 'html', 'vue'],
+      },
+    ]
   })
 
   const postCssLoaders = helpers.getLoadersByName(config, 'postcss-loader')
