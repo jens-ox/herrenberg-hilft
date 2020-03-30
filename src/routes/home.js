@@ -10,34 +10,37 @@ const fuse = new Fuse(shops, {
 class Home extends Component {
   constructor() {
     super()
-    this.state = { searchTerm: '', industry: '', shops }
+    this.state = { searchTerm: '', industry: '' }
+  }
+
+  shops ({ searchTerm, industry }) {
+    let selection = shops
+
+    // filter by search term if necessary
+    if (searchTerm && searchTerm !== '') {
+      selection = fuse.search(searchTerm).map(x => x.item)
+    }
+    
+    // filter by industry if necessary
+    if (industry && industry !== '') {
+      selection = selection.filter(shop => shop.industries.includes(industry))
+    }
+
+    return selection
   }
 
   search = e => {
     const searchTerm = e.target.value
-    this.setState({
-      searchTerm,
-      shops: searchTerm !== ''
-        ? this.state.industry !== ''
-          ? fuse.search(searchTerm)
-              .map(x => x.item)
-              .filter(shop => shop.industries.includes(this.state.industry))
-          : fuse.search(searchTerm).map(x => x.item)
-        : shops
-    })
+    this.setState({ searchTerm })
   }
 
   select = e => {
     const industry = e.target.value
-    this.setState({
-      industry,
-      shops: industry !== ''
-        ? shops.filter(shop => shop.industries.includes(industry))
-        : shops
-    })
+    this.setState({ industry })
   }
 
-  render (_, { searchTerm, shops }) {
+  render (_, { searchTerm, industry }) {
+    const filteredShops = this.shops({ searchTerm, industry })
     return <div class="container px-1">
       <h1 className="text-xl border-b-2 border-accent inline-block mb-4">Herrenberg liefert - Handel und Gastronomie trotz(t) Corona</h1>
       <div className="max-w-3xl">
@@ -67,11 +70,11 @@ class Home extends Component {
 
         </div>
       </div>
-      {!shops.length && (
+      {!filteredShops.length && (
         <p className="my-8 italic text-red-600">keine Geschäfte für diesen Suchbegriff gefunden.</p>
       )}
       <div className="py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {shops.map(shop => (
+        {filteredShops.map(shop => (
           <ShopCard
             name={shop.name}
             description={shop.description}
