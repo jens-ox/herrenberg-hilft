@@ -2,6 +2,7 @@ import { Component } from 'preact'
 import ShopCard from '../components/shopCard'
 import shops from '../assets/shops'
 import Fuse from 'fuse.js'
+import Industries from '../assets/industries'
 const fuse = new Fuse(shops, {
   keys: ['name', 'tags']
 })
@@ -9,19 +10,31 @@ const fuse = new Fuse(shops, {
 class Home extends Component {
   constructor() {
     super()
-    this.state = { searchTerm: '', shops }
+    this.state = { searchTerm: '', industry: '', shops }
   }
 
   search = e => {
     const searchTerm = e.target.value
-    if (searchTerm === '') {
-      this.setState({ searchTerm: '', shops })
-    } else {
-      console.log('search for: ', searchTerm)
-      const result = fuse.search(searchTerm)
-      console.log('result. ', result)
-      this.setState({ searchTerm, shops: result.map(x => x.item) })
-    }
+    this.setState({
+      searchTerm,
+      shops: searchTerm !== ''
+        ? this.state.industry !== ''
+          ? fuse.search(searchTerm)
+              .map(x => x.item)
+              .filter(shop => shop.industries.includes(this.state.industry))
+          : fuse.search(searchTerm).map(x => x.item)
+        : shops
+    })
+  }
+
+  select = e => {
+    const industry = e.target.value
+    this.setState({
+      industry,
+      shops: industry !== ''
+        ? shops.filter(shop => shop.industries.includes(industry))
+        : shops
+    })
   }
 
   render (_, { searchTerm, shops }) {
@@ -32,8 +45,27 @@ class Home extends Component {
         Der besondere Charme von Herrenberg – den zaubern nicht nur eine wunderschöne Altstadt und die Stiftskirche, sondern auch zahlreiche kleine, kleinste und größere Geschäfte, Restaurants und Cafés. Händler und Gastronomen tragen viel dazu bei, dass Herrenberg eine so lebens- und liebenswerte Stadt ist.
         </p>
 
-        <label htmlFor="search" className="text-xs font-bold">Nach Schlagwort suchen</label>
-        <input id="search" value={searchTerm} onInput={this.search} className="w-full bg-gray-200 rounded px-2 py-1 text-lg" type="text" placeholder="Suchbegriff eingeben" />
+        <div class="flex flex-col lg:flex-row">
+          <div className="flex-grow mb-4 lg:mb-0 lg:mr-2">
+            <label htmlFor="search">Nach Schlagwort suchen</label>
+            <input id="search" value={searchTerm} onInput={this.search} className="input" type="text" placeholder="Suchbegriff eingeben" />
+          </div>
+          <div>
+            <label htmlFor="selectIndustrie">Branche</label>
+            <select
+              className="input"
+              name="industry"
+              id="selectIndustry"
+              onInput={this.select}
+            >
+              <option value="">Alle</option>
+              {Object.values(Industries).map(industry => (
+                <option value={industry}>{industry}</option>
+              ))}
+            </select>
+          </div>
+
+        </div>
       </div>
       {!shops.length && (
         <p className="my-8 italic text-red-600">keine Geschäfte für diesen Suchbegriff gefunden.</p>
